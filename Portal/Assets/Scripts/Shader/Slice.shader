@@ -7,9 +7,9 @@
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
 
-        sliceNormal("normal", Vector) = (0,0,0,0)
-        sliceCentre ("centre", Vector) = (0,0,0,0)
-        sliceOffsetDst("offset", Float) = 0
+        _SliceNormal("normal", Vector) = (0,0,0,0)
+        _SlicePosition ("centre", Vector) = (0,0,0,0)
+        _SliceOffset("offset", Float) = 0
     }
     SubShader
     {
@@ -35,17 +35,17 @@
         fixed4 _Color;
 
         // World space normal of slice, anything along this direction from centre will be invisible
-        float3 sliceNormal;
+        float3 _SliceNormal;
         // World space centre of slice
-        float3 sliceCentre;
+        float3 _SlicePosition;
         // Increasing makes more of the mesh visible, decreasing makes less of the mesh visible
-        float sliceOffsetDst;
+        float _SliceOffset;
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            float3 adjustedCentre = sliceCentre + sliceNormal * sliceOffsetDst;
+            float3 adjustedCentre = _SlicePosition + _SliceNormal * _SliceOffset;
             float3 offsetToSliceCentre = adjustedCentre - IN.worldPos;
-            clip (dot(offsetToSliceCentre, sliceNormal));
+            clip (dot(offsetToSliceCentre, _SliceNormal));
             
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;

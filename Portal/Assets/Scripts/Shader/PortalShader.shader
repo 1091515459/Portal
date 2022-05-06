@@ -8,6 +8,7 @@ Shader "Unlit/PortalShader"
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
+        Cull Off
 
         Pass
         {
@@ -45,9 +46,9 @@ Shader "Unlit/PortalShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.screenPos.xy / i.screenPos.w;
-                // fixed4 portalCol = tex2D(_MainTex, uv);
-                // return portalCol * displayMask + _InactiveColour * (1-displayMask);
-                return tex2D(_MainTex, uv);
+                fixed4 portalCol = tex2D(_MainTex, uv);
+                return portalCol * displayMask + _InactiveColour * (1-displayMask);
+                // return tex2D(_MainTex, uv);
             }
             ENDCG
         }
