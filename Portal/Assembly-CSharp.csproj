@@ -42,12 +42,12 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Portal.cs" />
+     <Compile Include="Assets\Scripts\TestBox.cs" />
      <Compile Include="Assets\Scripts\PortalTraveller.cs" />
      <Compile Include="Assets\Scripts\Demo\FPSController.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\CameraUtility.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
-     <Compile Include="Assets\Scripts\TestBox.cs" />
      <None Include="Assets\Scripts\Shader\PortalShader.shader" />
      <None Include="Assets\Scripts\Shader\Slice.shader" />
      <Reference Include="UnityEngine">

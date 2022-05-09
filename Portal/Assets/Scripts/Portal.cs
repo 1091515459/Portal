@@ -25,6 +25,7 @@ public class Portal : MonoBehaviour
     private Material firstRecursionMat;
     private MeshFilter screenMeshFilter;
     private List<PortalTraveller> trackedTravellers;
+    private ScriptableRenderContext renderContext;
 
     private void Awake()
     {
@@ -79,7 +80,8 @@ public class Portal : MonoBehaviour
     {
         if (camera.cameraType == CameraType.SceneView || camera.cameraType == CameraType.Preview)
             return;
-        UniversalRenderPipeline.RenderSingleCamera(context, portalCam);
+        renderContext = context;
+        UniversalRenderPipeline.RenderSingleCamera(renderContext, portalCam);
     }
 
     private void CreateViewTexture()
@@ -154,7 +156,9 @@ public class Portal : MonoBehaviour
             SetNearClipPlane();
             HandleClippingPlane();
             //ZX 2022-05-06 [error:Recursive rendering is not supported in SRP (are you calling Camera.Render from within a render pipeline?).]
-            // portalCam.Render();
+            portalCam.Render();
+            //ZX 2022-05-09 [依然是不行，需要找解决方案，参考 https://gist.github.com/limdingwen/d959fd004154a8bcd1c62a30f51d10ff#file-portal-cs-L450]
+            // UniversalRenderPipeline.RenderSingleCamera(renderContext, portalCam);
             
             if(i==startIndex)
             {
